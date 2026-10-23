@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2nd Puchong Company: Parade Order</title>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f6f4ef;color:#1d2a3a;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:16px;box-sizing:border-box}
+.box{max-width:360px} .spin{width:36px;height:36px;border:4px solid #d9d2c3;border-top-color:#1f3a5f;border-radius:50%;margin:0 auto 16px;animation:s 0.9s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}} a{color:#1f3a5f;font-weight:600}
+</style>
+</head>
+<body>
+<div class="box" id="msg"><div class="spin"></div><p>Loading 2nd Puchong Company: Parade Order&hellip;</p></div>
+<script>
+/* 2nd Puchong Company (02PCH). This page loads the live form from Google Apps Script.
+   To change the form itself, edit it in the Apps Script project, not here.
+   Only change API below if the Apps Script deployment is ever replaced. */
+var API = 'https://script.google.com/macros/s/AKfycbwEJSlHFP7YI2U1DkbX-32JYWKBl7sR22nxAL7GtG6VazONFg268pXXejODOdBy8MwhDA/exec';
+var PAGE = 'parade';
+function fail() {
+  document.getElementById('msg').innerHTML = '<p>Sorry, the Parade Order could not load. Please check your internet connection and refresh.</p>' +
+    '<p><a href="' + API + (PAGE ? '?page=' + PAGE : '') + '">Or open it on Google</a></p>';
+}
+fetch(API + '?raw=1' + (PAGE ? '&page=' + PAGE : ''), { credentials: 'omit' })
+  .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+  .then(function (html) {
+    if (html.indexOf('BB_API') < 0) throw new Error('bad page');
+    html = html.replace(/<head>/i, '<head><script>window.BB_API = ' + JSON.stringify(API) + ';<\/script>');
+    document.open(); document.write(html); document.close();
+  })
+  .catch(fail);
+</script>
+</body>
+</html>
